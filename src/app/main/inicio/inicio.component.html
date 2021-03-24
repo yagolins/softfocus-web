@@ -1,0 +1,55 @@
+<form fxLayout="column" [formGroup]="dadosPesquisaPlaylistForm" (ngSubmit)="pesquisar()">
+    <div fxLayout="column">
+      <mat-toolbar>
+        <span>Sugestão de Playlist</span>
+      </mat-toolbar>
+      <br/>
+            <div fxLayout="column" fxLayoutAlign="space-around center">
+              <label class="up">Selecione o tipo de busca:</label><br/>
+              <mat-radio-group fxFlex="30" formControlName="tipoPesquisa" 
+              aria-label="Selecione o tipo de pesquisa a ser realizada" (change)="updateTipo($event.value)">
+                <mat-radio-button value="1">Nome da Cidade</mat-radio-button>&nbsp;&nbsp;
+                <mat-radio-button value="2">Coordenadas</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <br/>
+            <div fxLayout="row" fxLayoutAlign="space-around center"  *ngIf="pesquisaPorNome">
+              <mat-form-field fxFlex="30">
+                <input matInput placeholder="Nome da Cidade" type="text" formControlName="nomeCidade">
+              </mat-form-field>
+            </div>
+    
+            <div fxLayout="column" fxLayoutAlign="space-around center" *ngIf="pesquisaPorCoordenada">
+              <mat-form-field fxFlex="50">
+                <input matInput placeholder="Latitude" type="text" formControlName="latitude">
+              </mat-form-field>
+              &nbsp;&nbsp;
+              <mat-form-field fxFlex="50">
+                <input matInput placeholder="Longitude" type="text" formControlName="longitude">
+              </mat-form-field>
+            </div>
+    </div>
+    <br/>
+    <div fxLayoutGap="10px"  fxLayout="row" fxLayoutAlign="center center">
+      <button mat-raised-button class="secondary" (click)="limpar()" type="button">Limpar</button> 
+      <button mat-raised-button color="primary" type="submit" fxFlexOffset="5">Pesquisar</button>
+    </div> 
+    </form>
+    <div *ngIf="musicas.data.length>0" fxLayout="column" fxLayoutAlign="space-around center">
+        <br/>
+      <p>Cidade: {{dadosPlaylist.nomeCidade}}</p>
+      <p>Latitude: {{dadosPlaylist.coordenadas.lat}}</p>
+      <p>Longitude: {{dadosPlaylist.coordenadas.lon}}</p>
+      <p>Temperatura: {{dadosPlaylist.temperatura}} ºC</p>
+      <p>Categoria Musical: {{dadosPlaylist.categoria}}</p>  
+      <table id="tbMusicas" mat-table [dataSource]="musicas">
+        <ng-container matColumnDef="musica">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="width-60">Playlist</th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" class="width-60">
+            {{element}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+    </div>

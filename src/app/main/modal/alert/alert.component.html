@@ -1,0 +1,13 @@
+<div>
+  <h3 mat-dialog-title [innerHTML]="data.title"> </h3>
+</div>
+<div mat-dialog-content [innerHTML]="data.text"></div>
+<br /><br />
+<div *ngIf="data.spinner" style="width: 100%; padding: 20px 0 20px 0; position: relative;">
+  <mat-progress-bar [value]="loadingPercent" color="warn" style="height: 3px;"></mat-progress-bar>
+</div>
+<div mat-dialog-actions class="dialog-example-buttons">
+  <div style="width: 100%; text-align: right;">
+    <button mat-button mat-raised-button class="btn-cadastrar" color="primary" (click)="closeDialog()">{{data.buttonSuccess}}</button>
+  </div>
+</div>
